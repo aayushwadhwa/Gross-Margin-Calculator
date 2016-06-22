@@ -1,1 +1,2 @@
-# Gross-Margin-Calculator
+# Gross Margin Calculator
+Project based on javaScript and JQuery 
