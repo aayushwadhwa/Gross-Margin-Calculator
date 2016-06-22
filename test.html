@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initialscale=1">
+ <title>Gross Margin Calculator</title>
+
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <link href="js/jquery-1.12.4.min" type="text/javascript"> 
+<script>
+	function calculate(){											// function to calculate revenue 
+	
+		event.preventDefault();									
+		var cost = $("#cost").val();							
+		var grossmargin = $("#grossmargin").val()/100;
+		
+		var revenue = (cost/(1-grossmargin)).toFixed(2);
+		
+		$("#revenue").val(revenue);
+		$("#revenue").css("background-color","#FAF3CE");		
+		document.getElementById("revenue").disabled=true;
+	}
+	$(document).ready(function(){									// function to get 1-100 in drop down list
+		var $select = $("#grossmargin1");
+		for (i=1;i<=100;i++){
+			$select.append($('<option></option>').val(i).html(i))
+		}
+	});
+	
+	
+	$(document).ready(function(){									// to get the values of cost field and calculate
+		$("#cost").keyup(function(){
+			calculate();
+		});
+	});
+	
+
+	$(document).ready(function(){									// to get the values from drop down list of gross margin and calculate revenue
+		$("#grossmargin1").on('change',function(){
+			var value = $("#grossmargin1").val();
+			$("#grossmargin").val(value);
+			if($("#grossmargin").val() < 100){
+				$("#alert").fadeOut();
+				calculate();
+		}else{
+			$("#alert").html("Gross Margin should be less than 100%");
+			$("#alert").fadeIn();
+		}
+		});
+	});
+	$(document).ready(function(){									// to get the values from gross margin field and calculate revenue
+		$("#grossmargin").keyup(function(){
+			if($("#grossmargin").val() < 100){
+				$("#alert").fadeOut();
+				calculate();
+		}else{
+			$("#alert").html("Gross Margin should be less than 100%");
+			$("#alert").fadeIn();
+		}
+		});
+	});
+</script>
+ <style>
+	body{
+		background-color:#FFFFFF;
+	}
+	
+	.borderDiv{
+		border:1px solid grey;
+		border-radius: 5px;	
+		background-color:#FAFAFA;
+	}
+	.marginTop{
+		margin-top:15px;
+	}
+	.formMargin{
+		padding:10px 10px 10px 10px;
+	}
+	p{
+		margin:0px;
+		padding:0px;
+	}
+	img{
+		height:100px;
+		width:120px;
+		margin-top:10px;
+	}
+	.alert{
+		display:none;
+	}
+	
+ </style>
+</head>
+<body>
+
+ <div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+			<div class="text-center"><img src="logo.png"/></div>
+			<h1 class="text-center">Gross Margin Calculator</h1>
+			<p class="lead text-center"> Please specify the cost and the desired gross margin.</p>
+			<div class="borderDiv">
+		<form class="formMargin">		
+			<div class="text-center"><strong>Cost</strong></div>
+			<div class="input-group">
+				<div class="input-group-addon">$</div>
+				<input type="number" id="cost" placeholder="Enter the cost of Goods" class="form-control"/>
+			</div>
+			<div class="text-center marginTop"><strong>Gross Margin</strong></div>
+			<div class="input-group">
+				
+				<input type="number" id="grossmargin" placeholder="Enter the desired Gross Margin" class="form-control"/>
+				<div class="input-group-addon">%</div>
+				
+				<select class="form-control" id="grossmargin1"></select>
+			</div>
+			
+			<div class="text-center marginTop "><strong>Calculated Revenue</strong></div>
+			<div class="input-group">
+				<div class="input-group-addon">$</div>
+				<input type="number" placeholder="Revenue is" id="revenue" class="form-control"/>
+			</div>
+			
+		<div class="alert alert-danger marginTop" id="alert"></div>
+		</form>
+		</div>
+	</div>
+	</div>
+	</div>
+</body>
+</html>
